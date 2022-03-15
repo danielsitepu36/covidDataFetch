@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import covid from './src/routes/covidRoute.js';
 import axios from 'axios';
+import fs from 'fs';
 import cron from 'node-cron';
 
 const url = 'mongodb://localhost/CovidDB';
@@ -36,8 +37,25 @@ async function fetchCovid() {
   try {
     console.log('Fetching..');
     await axios.post('http://localhost:5000/covid');
+    const date = new Date();
+    fs.appendFile(
+      'log.txt',
+      `API Fetch SUCCESS;date:${date} \n`,
+      function (err) {
+        if (err) throw err;
+        console.log('Log Updated');
+      }
+    );
     console.log('Fetch Success');
   } catch {
+    fs.appendFile(
+      'log.txt',
+      `API Fetch FAILED;date:${date} \n`,
+      function (err) {
+        if (err) throw err;
+        console.log('Log Updated');
+      }
+    );
     console.log('Fetch Failed');
   }
 }
