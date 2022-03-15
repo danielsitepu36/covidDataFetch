@@ -4,5 +4,5 @@ Express - MongoDB for Covid Data CRUD API
 
 #### To Start
 
-npm i
+npm i \
 nodemon run start
